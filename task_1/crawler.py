@@ -3,6 +3,7 @@ import sys
 import logging
 from typing import Optional, Tuple, List, Set
 import time
+import os
 
 from bs4 import BeautifulSoup
 import requests
@@ -111,6 +112,8 @@ def main():
     logging.basicConfig(level=logging.INFO)
     starting_url = DEFAULT_STARTING_URL
     max_pages = DEFAULT_MAX_PAGES
+
+    os.makedirs("pages", exist_ok=True)
 
     if len(sys.argv) == 1:
         pass
