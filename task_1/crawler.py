@@ -124,7 +124,9 @@ def main():
             starting_url = sys.argv[1]
         max_pages = int(sys.argv[2])
     else:
-        logger.error("Error! You can specify exactly one argument - starting URL")
+        logger.error(
+            "Error! You can specify one or two arguments: starting URL and max pages"
+        )
         exit(1)
     logger.info("Starting URL: %s", unquote(starting_url))
     logger.info("Max page: %d", max_pages)
