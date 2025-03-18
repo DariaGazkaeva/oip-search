@@ -96,14 +96,14 @@ def parse_webpage_content(content: str, original_url: str) -> Tuple[str, Set[str
     return body.prettify(), links
 
 
-def save_webpage(content: str, page_dir: str, page_id: int) -> None:
-    file_path = f"{page_dir}/{page_id}.html"
+def save_webpage(content: str, page_id: int) -> None:
+    file_path = f"results/pages/{page_id}.html"
     with open(file_path, "w+") as f:
         f.write(content)
 
 
 def save_index(index: List[str]) -> None:
-    with open("index.txt", "w+") as f:
+    with open("results/index.txt", "w+") as f:
         for i, url in enumerate(index):
             f.write(f"{i} {url}\n")
 
@@ -113,7 +113,7 @@ def main():
     starting_url = DEFAULT_STARTING_URL
     max_pages = DEFAULT_MAX_PAGES
 
-    os.makedirs("pages", exist_ok=True)
+    os.makedirs("results/pages", exist_ok=True)
 
     if len(sys.argv) == 1:
         pass
@@ -151,7 +151,7 @@ def main():
         urls.extend(new_urls)
 
         page_id = len(index)
-        save_webpage(text, "pages", page_id=page_id)
+        save_webpage(text, page_id=page_id)
         index.append(url)
 
         logger.info("%d) Parsed %s; sleeping %d seconds", page_id, url, SLEEP_TIME)
