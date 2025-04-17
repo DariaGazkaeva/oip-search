@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Поиск</title>
+    <style>
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Поиск</h1>
+
+    <form action="/" method="get">
+        <label for="search_query">Поиск:</label>
+        <input type="text" id="search_query" name="search_query" placeholder="Поисковая строка"
+            value="{{ search_query or '' }}">
+        <button type="submit">Искать</button>
+    </form>
+
+    {% if document_urls %}
+    <h2>Результаты (Страница {{ page }}, {{ number_results }} на странице):</h2>
+    <ul>
+        {% for result in document_urls %}
+        <li><a href="{{ result }}">{{result}} (Схожесть {{similarity[loop.index - 1]}})</a></li>
+        {% endfor %}
+    </ul>
+
+    <p>
+        {% if page > 1 %}
+        <a
+            href="?search_query={{ search_query or '' }}&page={{ page - 1 }}&number_results={{ number_results }}">Назад</a>
+        {% else %}
+        <span>Назад</span>
+        {% endif %}
+
+        {% if document_urls|length == number_results and (page * number_results) < total_results %} <a
+            href="?search_query={{ search_query or '' }}&page={{ page + 1 }}&number_results={{ number_results }}">
+            Вперед</a>
+            {% else %}
+            <span>Вперед</span>
+            {% endif %}
+    </p>
+    {% endif %}
+</body>
+
+</html>
