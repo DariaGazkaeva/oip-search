@@ -28,6 +28,9 @@ def parse_search_query(
         else:
             tf[lemma] = 1
 
+    for lemma in tf.keys():
+        tf[lemma] = tf[lemma] / len(query_split)
+
     # if lemma is not present in search query => tf = 0
     # if lemma is not present in search index => idf = 0
     vector = [tf.get(lemma, 0) * lemma_idf.get(lemma, 0) for lemma in all_lemmas]
